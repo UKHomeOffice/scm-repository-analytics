@@ -65,3 +65,4 @@ Contains configuration for dashboards for visualising queries and data, again wr
 **./docs**
 
 Modification documentation specific to the steampipe package.
+
