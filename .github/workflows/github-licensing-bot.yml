@@ -14,4 +14,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run monitoring mixin
-        run: docker run -t ${{ env.REGISTRY }}/${{ env.USER }}/${{ env.IMAGE_NAME }}:${env.VERSION}
+        run: docker run -t ${{ env.REGISTRY }}/${{ env.USER }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
