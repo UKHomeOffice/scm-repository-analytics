@@ -8,16 +8,16 @@ env:
   REGISTRY: ghcr.io
   USER: samiwelthomasho
   VERSION: 1.0.0
-  GITHUB_ENTERPRISE_NAME: ukhomeoffice
+  ENTERPRISE_NAME: ukhomeoffice
 
 jobs:
   run-licensing-bot:
     runs-on: ubuntu-latest
     steps:
-      - name: Run monitoring mixin
+      - name: Run github-licensing-bot
         run: docker run -t ${{ env.REGISTRY }}/${{ env.USER }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
         env:
-          GITHUB_ENTERPRISE_NAME: ${{ env.GITHUB_ENTERPRISE_NAME }}
+          GITHUB_ENTERPRISE_NAME: ${{ env.ENTERPRISE_NAME }}
           GITHUB_TOKEN: ${{ secrets.ENTERPRISE_BILLING_TOKEN }}
           OVER_LICENSED_THRESHOLD: 20
           UNDER_LICENSED_THRESOLD: 10
