@@ -1,4 +1,4 @@
-name: github-licensing-bot
+name: build-github-licensing-bot
 
 on:
   - workflow_dispatch
