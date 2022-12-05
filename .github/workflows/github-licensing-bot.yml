@@ -15,11 +15,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run github-licensing-bot
-        run: docker run -t ${{ env.REGISTRY }}/${{ env.USER }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
-        env:
-          GITHUB_ENTERPRISE_NAME: ${{ env.ENTERPRISE_NAME }}
-          GITHUB_TOKEN: ${{ secrets.ENTERPRISE_BILLING_TOKEN }}
-          OVER_LICENSED_THRESHOLD: 20
-          UNDER_LICENSED_THRESOLD: 10
-          SLACK_ALERTS_CHANNEL: 'github-alerts'
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        run: docker run -t -e GITHUB_ENTERPRISE_NAME=${{ env.ENTERPRISE_NAME }} -e GITHUB_TOKEN=${{ secrets.ENTERPRISE_BILLING_TOKEN }} -e OVER_LICENSED_THRESHOLD=20 -e UNDER_LICENSED_THRESOLD=10 -e SLACK_ALERTS_CHANNEL='github-alerts' -e SLACK_WEBHOOK=${{ secrets.SLACK_WEBHOOK }} ${{ env.REGISTRY }}/${{ env.USER }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
