@@ -12,9 +12,10 @@ jobs:
   build-licensing-bot:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - name: Checkout github-licencing-bot
+        uses: actions/checkout@master
         with:
-          name: ONSDigital/github-licensing-bot
+          repository: ONSDigital/github-licensing-bot
           ref: refs/heads/main
 
       - name: Get the latest tag
