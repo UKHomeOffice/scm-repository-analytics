@@ -1,0 +1,27 @@
+name: github-licensing-bot
+
+on:
+  - workflow_dispatch
+
+env:
+  IMAGE_NAME: github-licensing-bot
+  REGISTRY: ghcr.io
+  USER: samiwelthomasHO
+
+jobs:
+  build-licensing-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+        with:
+          name: ONSDigital/github-licensing-bot
+          ref: refs/heads/main
+
+      - name: Get the latest tag
+        run: echo "VERSION=$(curl -Ls https://api.github.com/repos/ONSDigital/github-licensing-bot/releases/latest | jq ".tag_name" | xargs | cut -c2-)" >> $GITHUB_ENV
+
+      - name: Build container
+        run: docker build -t ${{ env.REGISTRY }}/${{ env.USER }}/${{ env.IMAGE_NAME }}:${VERSION} ${GITHUB_WORKSPACE}/ONSDigital/github-licensing-bot
+
+      - name: Push image to GitHub Container Registry
+        run: docker push ${{ env.REGISTRY }}/${{ env.USER }}/${{ env.IMAGE_NAME }}:${VERSION}

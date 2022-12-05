@@ -1,0 +1,28 @@
+name: github-licensing-bot
+
+on:
+  schedule:
+    - cron: "0 0 0 0 0"
+
+jobs:
+  run-licensing-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3.1.0
+      - uses: actions/checkout@master
+        with:
+          name: ONSDigital/github-licensing-bot
+          ref: refs/heads/release
+      - name: Load Docker image
+        run: |
+          docker load --input /tmp/${{ inputs.repositoryName }}.tar
+          echo "IMAGE_TAG=$(docker image ls --format '{{.Repository}}:{{.Tag}}' | grep sre-monitoring-as-code)" >> $GITHUB_ENV
+      - name: echo image tag
+        run: echo "${{ env.IMAGE_TAG }}"
+      - name: Run monitoring mixin
+        run: docker run -v ${{ github.workspace }}/monitoring-as-code:${{ github.workspace }}/data -t ${{ env.IMAGE_TAG }} -m monitoring -rd -i ${{ github.workspace }}/data/mixin-defs -o ${{ github.workspace }}/data/output
+      - name: Run testing mixin
+        run: docker run -v ${{ github.workspace }}/monitoring-as-code:${{ github.workspace }}/data -t ${{ env.IMAGE_TAG }} -m testing -rd -i ${{ github.workspace }}/data/mixin-defs -o ${{ github.workspace }}/data/output
+      - name: Run promtool checks
+        run: for FILE in ${{ github.workspace }}
