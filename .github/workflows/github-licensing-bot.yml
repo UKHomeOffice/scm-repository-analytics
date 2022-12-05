@@ -8,6 +8,7 @@ env:
   REGISTRY: ghcr.io
   USER: samiwelthomasho
   VERSION: 1.0.0
+  GITHUB_ENTERPRISE_NAME: ukhomeoffice
 
 jobs:
   run-licensing-bot:
@@ -15,3 +16,10 @@ jobs:
     steps:
       - name: Run monitoring mixin
         run: docker run -t ${{ env.REGISTRY }}/${{ env.USER }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
+        env:
+          GITHUB_ENTERPRISE_NAME: ${{ env.GITHUB_ENTERPRISE_NAME }}
+          GITHUB_TOKEN: ${{ secrets.ENTERPRISE_BILLING_TOKEN }}
+          OVER_LICENSED_THRESHOLD: 20
+          UNDER_LICENSED_THRESOLD: 10
+          SLACK_ALERTS_CHANNEL: 'github-alerts'
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
