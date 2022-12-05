@@ -6,7 +6,7 @@ on:
 env:
   IMAGE_NAME: github-licensing-bot
   REGISTRY: ghcr.io
-  USER: samiwelthomasHO
+  USER: samiwelthomasho
 
 jobs:
   build-licensing-bot:
