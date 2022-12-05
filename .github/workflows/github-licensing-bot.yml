@@ -1,0 +1,26 @@
+name: run-github-licensing-bot
+
+on:
+  - workflow_dispatch
+
+env:
+  IMAGE_NAME: github-licensing-bot
+  REGISTRY: ghcr.io
+  USER: ukhomeoffice
+  VERSION: 1.0.0
+  ENTERPRISE_NAME: ukhomeoffice
+
+jobs:
+  run-licensing-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run github-licensing-bot
+        run: |
+          docker run -t \
+          -e GITHUB_ENTERPRISE_NAME=${{ env.ENTERPRISE_NAME }} \
+          -e GITHUB_TOKEN=${{ secrets.ENTERPRISE_BILLING_TOKEN }} \
+          -e OVER_LICENSED_THRESHOLD=50 \
+          -e UNDER_LICENSED_THRESHOLD=15 \
+          -e SLACK_ALERTS_CHANNEL='github-alerts' \
+          -e SLACK_WEBHOOK=${{ secrets.SLACK_WEBHOOK }} \
+          ${{ env.REGISTRY }}/${{ env.USER }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
