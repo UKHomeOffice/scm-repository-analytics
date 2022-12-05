@@ -21,6 +21,11 @@ jobs:
       - name: Get the latest tag
         run: echo "VERSION=$(curl -Ls https://api.github.com/repos/ONSDigital/github-licensing-bot/releases/latest | jq ".tag_name" | xargs | cut -c2-)" >> $GITHUB_ENV
 
+      - run: |
+          echo $(pwd)
+          echo $GITHUB_WORKSPACE
+          echo `ls $(GITHUB_WORKSPACE)`
+
       - name: Build container
         run: docker build -t ${{ env.REGISTRY }}/${{ env.USER }}/${{ env.IMAGE_NAME }}:${VERSION} ${GITHUB_WORKSPACE}/github-licensing-bot
 
