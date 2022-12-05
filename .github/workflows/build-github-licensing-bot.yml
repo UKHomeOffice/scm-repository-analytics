@@ -23,8 +23,9 @@ jobs:
 
       - run: |
           echo $(pwd)
+          ls -lR
           echo $GITHUB_WORKSPACE
-          echo `ls $(GITHUB_WORKSPACE)`
+          ls -lR $GITHUB_WORKSPACE
 
       - name: Build container
         run: docker build -t ${{ env.REGISTRY }}/${{ env.USER }}/${{ env.IMAGE_NAME }}:${VERSION} ${GITHUB_WORKSPACE}/github-licensing-bot
