@@ -1,7 +1,8 @@
 name: run-github-licensing-bot
 
 on:
-  - workflow_dispatch
+  schedule:
+    - cron: "0 10 */2 * *"
 
 env:
   IMAGE_NAME: github-licensing-bot
