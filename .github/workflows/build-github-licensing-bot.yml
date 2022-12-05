@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@master
         with:
           repository: ONSDigital/github-licensing-bot
-          ref: refs/heads/main
+          ref: main
 
       - name: Get the latest tag
         run: echo "VERSION=$(curl -Ls https://api.github.com/repos/ONSDigital/github-licensing-bot/releases/latest | jq ".tag_name" | xargs | cut -c2-)" >> $GITHUB_ENV
